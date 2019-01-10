@@ -1,0 +1,72 @@
+/* Wrapper things */
+.background-wrap {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background-image: url("../../assets/images/it-cover-blur.jpg");
+    background-color: #FFFFFF; /* Used if the image is unavailable */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+#init-stage {
+    margin-top:20px;
+    padding: 0;
+    width: 80%;
+}
+
+/*  Avatar */
+.avatar {
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    padding-top: 35px;
+    border-radius: 10px;
+}
+
+img {
+    border-radius: 10px;
+    padding: 4px;
+    margin: 0 auto;
+    display: block;
+    max-width: 150px;
+    max-height: 150px;
+    border: 3px solid #CCC;
+}
+
+#basic_info_wrap {
+    margin-top: 60px
+}
+
+.basic_details_wrap {
+    padding: 10px;
+    margin-top: 20px;
+    background-color :white;
+}
+
+/* Paragraphs */
+p { text-indent: 30px; }
+.no-indent { text-indent: 0px;}
+.intro-text {
+    
+    padding: 60px 0;
+}
+
+ul { padding-top: 20px; }
+
+.transparent { opacity: 0.8;}
+
+.into-text-wrap {
+    padding: 10px 20px;
+    /* padding: 1000px 0; */
+    background-color: #f8f9fa;
+}
+
+/* move avatar closer to top on smaller resolutions */
+@media (max-width: 576px) {
+    #basic_info_wrap {
+        margin-top: 0px
+    }
+}
