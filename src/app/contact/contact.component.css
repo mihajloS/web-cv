@@ -1,0 +1,29 @@
+/* Wrapper things */
+.background-wrap {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background-image: url("../../assets/images/it-cover-blur.jpg");
+    background-color: #FFFFFF; /* Used if the image is unavailable */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+#init-stage {
+    margin-top:20px;
+    padding: 0;
+    width: 80%;
+}
+
+.transparent { opacity: 0.8; }
+.transparent-gray-bg {
+    opacity: 0.8;
+    background-color: #f8f9fa;
+}
+
+.header {
+    padding-top: 30px;
+}
+
