@@ -11,7 +11,7 @@
       <form #contactForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="email_address">Email address</label>
-          <input required type="email" #email="ngModel" [(ngModel)]="model.email" name="email" class="form-control" id="email_address" placeholder="Enter email">
+          <input required type="email" #email="ngModel" [(ngModel)]="model.from" name="email" class="form-control" id="email_address" placeholder="Enter email">
           <div [hidden]="email.valid || email.untouched" class="alert alert-danger">You must fill in email</div>
         </div>
         <div class="form-group">
@@ -24,7 +24,7 @@
     </div>
     <!-- After submit message -->
     <div [hidden]="!submit">
-      <p>You sent me message from email: <b>{{model.email}}</b></p>
+      <p>You sent me message from email: <b>{{model.from}}</b></p>
       <p>With content: <b>{{model.message}}</b></p>
       If you want to edit you can go <a (click)="submit = !submit" href="">back</a> and update.
     </div>

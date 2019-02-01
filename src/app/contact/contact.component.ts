@@ -19,6 +19,9 @@ export class ContactComponent implements OnInit {
 
   onSubmit() {
     this.submit = true
+    this.contactService.sendEmail(this.model).subscribe((res) => {
+      console.log('done', res)
+    })
   }
 
 }

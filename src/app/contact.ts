@@ -1,3 +1,3 @@
 export class Contact {
-    constructor(email:String = "", message:String = "") {}
+    constructor(from:String = "", message:String = "") {}
 }
