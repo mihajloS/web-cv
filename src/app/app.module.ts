@@ -9,6 +9,7 @@ import { InitStageComponent } from './init-stage/init-stage.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { HttpClientModule } from "@angular/common/http";
+import { PublicChatComponent } from './public-chat/public-chat.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from "@angular/common/http";
     NavigationComponent,
     InitStageComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    PublicChatComponent
   ],
   imports: [
     BrowserModule,
