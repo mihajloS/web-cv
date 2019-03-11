@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicChatComponent implements OnInit {
 
+  active_users_count:number = 0;
+
   constructor() { }
 
   ngOnInit() {
+    console.log(document.getElementsByTagName('li').length);
+    this.active_users_count = document.getElementsByTagName('li').length;
   }
 
 }
