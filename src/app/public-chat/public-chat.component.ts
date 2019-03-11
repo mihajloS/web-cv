@@ -12,7 +12,6 @@ export class PublicChatComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(document.getElementsByTagName('li').length);
     this.active_users_count = document.getElementsByTagName('li').length;
   }
 
