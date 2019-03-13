@@ -4,34 +4,12 @@
           <div class="headers">Active users <b>({{active_users_count}})</b></div>
           <div id="list">
           <ul class="list-group">
-            <!-- <li *ngFor="let item of users; let i = index">
-              {{i}} {{item}}
-            </li> -->
-            <li class="list-group-item">Jovica</li>
-            <li class="list-group-item active">Ivica</li>
-            <li class="list-group-item">Marica</li>
-            <li class="list-group-item">__fata__</li>
-            <li class="list-group-item">sofere_trazim<3</li>
-            <li class="list-group-item">Jovica</li>
-            <li class="list-group-item">Ivica</li>
-            <li class="list-group-item">Marica</li>
-            <li class="list-group-item">__fata__</li>
-            <li class="list-group-item">sofere_trazim<3</li>
-            <li class="list-group-item">Jovica</li>
-            <li class="list-group-item">Ivica</li>
-            <li class="list-group-item">Marica</li>
-            <li class="list-group-item">__fata__</li>
-            <li class="list-group-item">sofere_trazim<3</li>
-            <li class="list-group-item">Jovica</li>
-            <li class="list-group-item">Ivica</li>
-            <li class="list-group-item">Marica</li>
-            <li class="list-group-item">__fata__</li>
-            <li class="list-group-item">sofere_trazim<3</li>
-            <li class="list-group-item">Jovica</li>
-            <li class="list-group-item">Ivica</li>
-            <li class="list-group-item">Marica</li>
-            <li class="list-group-item">__fata__</li>
-            <li class="list-group-item">sofere_trazim<3</li>
+            <!-- Hardcoded user that makes example of active LI -->
+            <!-- Jovica will become bot eventually -->
+            <!-- Also I liked red border on left edge so I wanted to keep him :D -->
+            <li class="list-group-item active">[Admin] - Jovica the Bot</li>
+            <!-- Dynamic list of chat users -->
+            <li class="list-group-item" *ngFor="let item of users;"> {{item}} </li>
           </ul>
         </div>
         </div>
@@ -39,37 +17,43 @@
             <div class="headers">
               <div class="img"> <img id="img_profile" src="../../assets/images/avatar.jpg" alt="Chat profile image">  </div>
               <div class="img">
-                <div id="chat_nick">Ivica</div>
-                <div id="presence">online</div>
+                <div id="chat_nick">{{me.name}}</div>
+                <div id="presence">{{me.presence}}</div>
               </div>
             </div>
             <div id="messages">
-              <div class="msg_sender">
-                <div class="msg_user">
-                  <img class="msg_user_img" src="../../assets/images/avatar.jpg" alt="Chat message profile image">
+                <div *ngFor="let data of chatHistory">
+                    <ng-template *ngIf="data.me; then meBlock; else senderBlock"></ng-template>
                 </div>
-                <div class="msg_sender_text">
-                  <p> This is my message text. :)This is my message text. :)This is my message text. :)This is my message text. :)</p>
-                  <p> More text from me.</p>
-                  <p> Thirst is a charm.</p>
-                  <p> Off to work</p>
-                </div>
-              </div>
-              <div class="msg_me">
-                <div class="msg_user">
-                  <img class="msg_user_img" src="../../assets/images/avatar.jpg" alt="Chat message profile image">
-                </div>
-                <div class="msg_me_text">
-                  <p> This is my message text. :)</p>
-                  <p> More text from me.</p>
-                  <p> Thirst is a charm.</p>
-                  <p> Off to work</p>
-                </div>
+              <div *ngFor="let data of chatHistory">
+                <!-- <div *ngIf="data.me | async as x; then meBlock; else senderBlock"></div> -->
+                <ng-template [ngIf]="!data.me">
+                    <div class="msg_sender">
+                      <div class="msg_user">
+                        <img class="msg_user_img" src="../../assets/images/avatar.jpg" alt="Chat message profile image">
+                      </div>
+                      <div class="msg_sender_text">
+                        <p>{{data.text}}</p>
+                      </div>
+                    </div>
+                    <div class="clear"></div>
+                  </ng-template>
+                  <ng-template [ngIf]="data.me">
+                      <div class="msg_me">
+                        <div class="msg_user">
+                          <img class="msg_user_img" src="../../assets/images/avatar.jpg" alt="Chat message profile image">
+                        </div>
+                        <div class="msg_me_text">
+                            <p>{{data.text}}</p>
+                        </div>
+                      </div>
+                      <div class="clear"></div>
+                    </ng-template>
               </div>
             </div>
             <div id="msg_input_wrap">
-              <input type="text" placeholder="Type here..">
-              <span><img src="../../assets/icons/chat_send_button.png" alt="Chat send button image"></span>
+              <input type="text" #chatMessage placeholder="Type here.." (keyup)="keyUp(chatMessage.value)" (keydown.enter)="sendMessage()">
+              <span><img (click) = "sendMessage()" src="../../assets/icons/chat_send_button.png" alt="Chat send button image"></span>
             </div>
         </div>
       </div>
