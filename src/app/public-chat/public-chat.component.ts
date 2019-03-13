@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PublicChatService } from '../public-chat.service';
 
 @Component({
   selector: 'app-public-chat',
@@ -41,7 +42,7 @@ export class PublicChatComponent implements OnInit {
     {me: true, text: "Deal"},
   ];
 
-  constructor() { }
+  constructor(chatAPI: PublicChatService) { }
 
   ngOnInit() {
     this.active_users_count = this.users.length;
