@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { InputDecorator } from '@angular/core/src/metadata/directives';
 
 @Component({
   selector: 'app-public-chat',
