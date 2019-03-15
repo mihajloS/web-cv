@@ -33,7 +33,7 @@
                         <img class="msg_user_img" src="../../assets/images/avatar.jpg" alt="Chat message profile image">
                       </div>
                       <div class="msg_sender_text">
-                        <p>{{data.text}}</p>
+                        <p *ngFor="let text of data.texts">{{text}}</p>
                       </div>
                     </div>
                     <div class="clear"></div>
@@ -44,7 +44,7 @@
                           <img class="msg_user_img" src="../../assets/images/avatar.jpg" alt="Chat message profile image">
                         </div>
                         <div class="msg_me_text">
-                            <p>{{data.text}}</p>
+                            <p *ngFor="let text of data.texts">{{text}}</p>
                         </div>
                       </div>
                       <div class="clear"></div>

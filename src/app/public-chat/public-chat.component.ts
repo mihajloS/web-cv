@@ -31,21 +31,20 @@ export class PublicChatComponent implements OnInit {
     'Either way'
   ]
   chatHistory = [
-    {me: true, text: "Hey this is me"},
-    {me: false, text: "Hey man!"},
-    {me: true, text: "Me again"},
-    {me: true, text: "Lets go out"},
-    {me: true, text: "Day is amazing to be out on the sun"},
-    {me: true, text: "Lets exercise outdoors"},
-    {me: false, text: "I am in!"},
-    {me: false, text: "Lets meet in 20"},
-    {me: true, text: "Deal"},
+    {me: true, texts: ["Hey this is me"]},
+    {me: false, texts: ["Hey man!"]},
+    {me: true, texts: ["Me again", "Lets go out", "Day is amazing to be out on the sun", "Lets exercise outdoors"]},
+    {me: false, texts: ["I am in!", "Lets meet in 20"]},
+    {me: true, texts: ["Deal"]},
   ];
 
-  constructor(chatAPI: PublicChatService) { }
+  constructor(private chatAPI: PublicChatService) { }
 
   ngOnInit() {
     this.active_users_count = this.users.length;
+    setTimeout(()=>{
+      this.chatAPI.join('MikaZika123');
+    }, 2000)
   }
 
   keyUp(msg) {
@@ -56,9 +55,13 @@ export class PublicChatComponent implements OnInit {
     if (this.chatText.trim().length === 0)
       return;
 
-    // add text to chat
-    this.chatHistory.push({me: true, text: this.chatText});
+    this.chatAPI.sendMessage(this.chatText);
 
+    // add text to chat
+    if (this.chatHistory[this.chatHistory.length-1].me)
+      this.chatHistory[this.chatHistory.length-1].texts.push(this.chatText);
+    else
+    this.chatHistory.push({me: true, texts: [this.chatText]});
     // clear text input
     document.getElementsByTagName('input')[0].value = '';
     this.chatText = '';
