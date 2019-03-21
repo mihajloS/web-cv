@@ -10,8 +10,8 @@ export class PublicChatComponent implements OnInit {
 
   chatText = "";
   active_users_count:number = 0;
-  me:object = {name: 'Mihajlo', presence: 'online'};
-  users: String[] = [
+  me:object = {name: '', presence: 'online'};
+  private users: String[] = [
     'Jovica',
     'Ivica',
     'Marica',
@@ -30,7 +30,7 @@ export class PublicChatComponent implements OnInit {
     'Moving with development',
     'Either way'
   ]
-  chatHistory = [
+  private chatHistory = [
     {me: true, texts: ["Hey this is me"]},
     {me: false, texts: ["Hey man!"]},
     {me: true, texts: ["Me again", "Lets go out", "Day is amazing to be out on the sun", "Lets exercise outdoors"]},
@@ -38,16 +38,21 @@ export class PublicChatComponent implements OnInit {
     {me: true, texts: ["Deal"]},
   ];
 
-  constructor(private chatAPI: PublicChatService) { }
+  private nickname:string = null;
 
-  ngOnInit() {
-    this.active_users_count = this.users.length;
-    setTimeout(()=>{
-      this.chatAPI.join('MikaZika123');
-    }, 2000)
+  constructor(private chatAPI: PublicChatService) {
+    console.log("Public chat component constructor");
   }
 
-  keyUp(msg) {
+  ngOnInit() {
+    setTimeout(() => {
+      this.me['name'] = prompt('Enter your nickname');
+      this.chatAPI.join(this.me['name']);
+    }, 0);
+    this.active_users_count = this.users.length;
+  }
+
+  keyUp(msg:string) {
     this.chatText = msg;
   }
 
