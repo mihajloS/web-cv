@@ -60,7 +60,11 @@ export class PublicChatComponent implements OnInit {
     if (this.chatText.trim().length === 0)
       return;
 
-    this.chatAPI.sendMessage(this.chatText);
+    this.chatAPI.sendMessage(this.chatText).then((res)=> {
+      console.log('message response', res);
+    }, (e)=> {
+      console.log("msg error", e);
+    });
 
     // add text to chat
     if (this.chatHistory[this.chatHistory.length-1].me)
