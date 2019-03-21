@@ -10,6 +10,8 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { HttpClientModule } from "@angular/common/http";
 import { PublicChatComponent } from './public-chat/public-chat.component';
+import { RouteReuseStrategy } from '@angular/router';
+import { RoutingRulesService } from './public-chat/routing-rules.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,7 @@ import { PublicChatComponent } from './public-chat/public-chat.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: RouteReuseStrategy, useClass: RoutingRulesService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
