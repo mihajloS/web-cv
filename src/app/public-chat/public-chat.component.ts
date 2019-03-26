@@ -36,7 +36,6 @@ export class PublicChatComponent implements OnInit {
         return;
       this.addToHistory(data.message, false);
       this.scrollToBottom();
-
     },
     (e) => {
       this.logger.error('Notification subscription error :', e);
