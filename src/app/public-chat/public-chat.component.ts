@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PublicChatService } from '../public-chat.service';
+import { Subject } from 'rxjs';
+import { Rpc } from '../rpc';
+import { LogService } from '../shared/log.service';
 
 @Component({
   selector: 'app-public-chat',
@@ -10,25 +13,11 @@ export class PublicChatComponent implements OnInit {
 
   chatText = "";
   active_users_count:number = 0;
-  me:object = {name: '', presence: 'online'};
-  private users: String[] = [
-    'Jovica',
-    'Ivica',
-    'Marica',
-    'Amy',
-    '__pink_power__',
-    '@soldering@',
-    'Sm1th',
-    'Walter@Man',
-    'WakamakaFon',
-    'Semuel 3L 1990',
-    'Go go go',
-    'Tired of names',
-    'Stupid words',
-    'Just coming out of',
-    'Me, because its late',
-    'Moving with development',
-    'Either way'
+  me = <any>{name: 'Anonymous user', presence: 'online', userId: null};
+  private users: object[] = [
+    {userId: 1, nickname: 'Pera'},
+    {userId: 2, nickname: 'Mika'},
+    {userId: 3, nickname: 'Zika'},
   ]
   private chatHistory = [
     {me: true, texts: ["Hey this is me"]},
@@ -40,14 +29,41 @@ export class PublicChatComponent implements OnInit {
 
   private nickname:string = null;
 
-  constructor(private chatAPI: PublicChatService) {
-    console.log("Public chat component constructor");
+  constructor(private chatAPI: PublicChatService, private logger: LogService) {
+    logger.log("Public chat component constructor", chatAPI);
+    chatAPI.notifications('Chat.onMessage').subscribe((data) => {
+      if (data.userId == this.me.userId)
+        return;
+      this.addToHistory(data.message, false);
+      this.scrollToBottom();
+
+    },
+    (e) => {
+      this.logger.error('Notification subscription error :', e);
+    });
+
+    chatAPI.notifications('Chat.onJoin').subscribe((data) => {
+      // handle self join
+      for (let value of this.users) {
+        if (value['userId'] === data.userId) {
+          // this.me.userId = data.data.userId
+          return;
+        }
+      }
+      // handle other joins
+      this.users.push(data);
+    },
+    (e) => {
+      this.logger.error('Notification subscription error :', e);
+    });
   }
 
   ngOnInit() {
     setTimeout(() => {
       this.me['name'] = prompt('Enter your nickname');
-      this.chatAPI.join(this.me['name']);
+      this.chatAPI.join(this.me['name']).then((res) => {
+        this.me.userId = res.userId;
+      });
     }, 0);
     this.active_users_count = this.users.length;
   }
@@ -61,24 +77,32 @@ export class PublicChatComponent implements OnInit {
       return;
 
     this.chatAPI.sendMessage(this.chatText).then((res)=> {
-      console.log('message response', res);
+      // TODO: Remove my message if this never happens
     }, (e)=> {
-      console.log("msg error", e);
+      // TODO: Remove my message if this fails
+      this.logger.log("msg error", e);
     });
 
-    // add text to chat
-    if (this.chatHistory[this.chatHistory.length-1].me)
-      this.chatHistory[this.chatHistory.length-1].texts.push(this.chatText);
-    else
-    this.chatHistory.push({me: true, texts: [this.chatText]});
+    this.addToHistory(this.chatText, true);
     // clear text input
     document.getElementsByTagName('input')[0].value = '';
     this.chatText = '';
 
     // scroll to bottom of chat messages
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
     var objDiv = document.getElementById("messages");
     setTimeout(() =>{objDiv.scrollTop = objDiv.scrollHeight;}, 0)
+  }
 
+  addToHistory(text, me) {
+    // add text to chat
+    if (this.chatHistory[this.chatHistory.length-1].me)
+      this.chatHistory[this.chatHistory.length-1].texts.push(text);
+    else
+      this.chatHistory.push({me: me, texts: [text]});
   }
 
 }
