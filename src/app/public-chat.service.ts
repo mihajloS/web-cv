@@ -9,7 +9,7 @@ import { LogService } from './shared/log.service';
 })
 export class PublicChatService {
 
-  private notificationSubscriptions: string[] = [];
+  private notificationSubscriptions: Object = new Object();
   private notifySubject = new Subject();
   private ws = null;
   private url = 'ws://localhost:8000'
@@ -22,10 +22,12 @@ export class PublicChatService {
     yield this.reqID += 1;
   }
 
-  private initSocket() {
+  public initSocket(cb) {
     this.ws = new WebSocket(this.url, this.protocol);
     this.ws.onmessage  = this.onMessage.bind(this);
-    this.ws.onopen = this.onOpen.bind(this);
+    this.ws.onopen = (data) => {
+      this.onOpen(data, cb);
+    }
     this.ws.onerror = this.onError.bind(this);
     this.ws.onclose = this.onClose.bind(this);
   }
@@ -41,14 +43,14 @@ export class PublicChatService {
   }
 
   private handleNotification(data:Rpc) {
-    if (this.notificationSubscriptions.includes(data.method))
-      this.notifySubject.next(data.data);
+    if (this.notificationSubscriptions.hasOwnProperty(data.method))
+      (this.notificationSubscriptions[data.method]).next(data.data);
   }
 
   public notifications(type):Subject<any> {
-    if (!this.notificationSubscriptions.includes(type))
-      this.notificationSubscriptions.push(type);
-    return this.notifySubject;
+    if (!this.notificationSubscriptions.hasOwnProperty(type))
+      this.notificationSubscriptions[type] = new Subject()
+    return this.notificationSubscriptions[type];
   }
 
   private handleResponse(data:Rpc) {
@@ -71,8 +73,9 @@ export class PublicChatService {
   }
 
 
-  private onOpen(data) {
+  private onOpen(data, cb) {
     this.logger.log("WS open", data);
+    cb();
   }
 
   public sendMessage(text:string):Promise<any> {
@@ -95,7 +98,5 @@ export class PublicChatService {
     return this.sendData('Chat.join', data);
   }
 
-  constructor(private logger: LogService) {
-    this.initSocket()
-  }
+  constructor(private logger: LogService) {}
 }

@@ -15,9 +15,9 @@ export class PublicChatComponent implements OnInit {
   active_users_count:number = 0;
   me = <any>{name: 'Anonymous user', presence: 'online', userId: null};
   private users: object[] = [
-    {userId: 1, nickname: 'Pera'},
-    {userId: 2, nickname: 'Mika'},
-    {userId: 3, nickname: 'Zika'},
+    // {userId: 1, nickname: 'Pera'},
+    // {userId: 2, nickname: 'Mika'},
+    // {userId: 3, nickname: 'Zika'},
   ]
   private chatHistory = [
     {me: true, texts: ["Hey this is me"]},
@@ -30,7 +30,6 @@ export class PublicChatComponent implements OnInit {
   private nickname:string = null;
 
   constructor(private chatAPI: PublicChatService, private logger: LogService) {
-    logger.log("Public chat component constructor", chatAPI);
     chatAPI.notifications('Chat.onMessage').subscribe((data) => {
       if (data.userId == this.me.userId)
         return;
@@ -41,16 +40,22 @@ export class PublicChatComponent implements OnInit {
       this.logger.error('Notification subscription error :', e);
     });
 
+    chatAPI.notifications('Chat.onLeave').subscribe((data) => {
+      this.users = this.users.filter((item:any) => {
+        return item.userId != data.userId
+      });
+      this.logger.debug('Roster list after leave', this.users);
+    },
+    (e) => {
+      this.logger.error('Notification subscription error :', e);
+    });
+
     chatAPI.notifications('Chat.onJoin').subscribe((data) => {
       // handle self join
-      for (let value of this.users) {
-        if (value['userId'] === data.userId) {
-          // this.me.userId = data.data.userId
-          return;
-        }
-      }
+      for (let value of this.users) { if (value['userId'] === data.userId) { return; } }
       // handle other joins
       this.users.push(data);
+      this.logger.debug('Roster list after join', this.users);
     },
     (e) => {
       this.logger.error('Notification subscription error :', e);
@@ -58,13 +63,14 @@ export class PublicChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.me['name'] = prompt('Enter your nickname');
-      this.chatAPI.join(this.me['name']).then((res) => {
-        this.me.userId = res.userId;
-      });
-    }, 0);
-    this.active_users_count = this.users.length;
+      this.chatAPI.initSocket(()=> {
+        this.me['name'] = 'Mihajlo';
+        this.chatAPI.join(this.me['name']).then((res) => {
+          this.me.userId = res.userId;
+          this.users = res.roster;
+        });
+        this.active_users_count = this.users.length;
+      })
   }
 
   keyUp(msg:string) {
