@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+/* * { */
+    /* font-family: "Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+} */
+
+
+html,
+body,
+header,
+#intro {
+    height: 100%
+}
+
+#intro {
+    background: url('./assets/images/Mountain-Lebrsnik-Header.jpg')no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.top-nav-collapse {
+    background-color: #24355C;
+}
+@media (max-width: 768px) {
+    .navbar:not(.top-nav-collapse) {
+      background-color: #24355C;
+    }
+}
+@media (min-width: 800px) and (max-width: 850px) {
+    .navbar:not(.top-nav-collapse) {
+      background-color: #24355C;
+    }
+}

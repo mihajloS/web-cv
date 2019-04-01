@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MDBBootstrapModule } from "angular-bootstrap-md";
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from "@angular/forms";
@@ -23,6 +24,7 @@ import { RoutingRulesService } from './public-chat/routing-rules.service';
     PublicChatComponent
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
