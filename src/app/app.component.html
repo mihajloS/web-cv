@@ -1,6 +1,24 @@
-<app-navigation></app-navigation>
-<!-- Basic background and some simple css tweaks -->
-<div class="container">
-        <!-- this is where custom things go -->
-        <router-outlet></router-outlet>
-</div>
+<!-- Main navigation -->
+<header>
+        <app-navigation></app-navigation>
+</header>
+<!-- /Main navigation -->
+
+<!-- Main layout -->
+<main>
+        <div class="container mt-5">
+                <app-about></app-about>
+                <app-contact></app-contact>
+        </div>
+</main>
+<!-- /Main layout -->
+
+<!-- Footer -->
+<footer>
+        <div class="container mb-5">
+                <div class="row justify-content-center align-items-center">
+                        <div class="col-4 text-light text-center">© 2019 Copyright: Mihajlo Supić</div>
+                </div>
+        </div>
+</footer>
+<!-- /Footer -->

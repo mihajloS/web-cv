@@ -1,28 +1,85 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top black">
 
-  <!-- Brand -->
-  <a class="navbar-brand" href="#" routerLink="/">
-    Mihajlo Supić
-  </a>
+  <div class="container">
 
-  <!-- Collapse button -->
-  <button (click)="navToggle()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="#">Mihajlo</a>
 
-  <!-- Nav items -->
-  <div [class.collapse]="collapse" class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" href="#" routerLink="/about">About</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" href="#" routerLink="/contact">Contact me</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" href="#" routerLink="/public-chat">Public chat</a>
-      </li>
+    <!-- Collapse button -->
+    <button (click)="navToggle()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div [class.collapse]="collapse" class="collapse navbar-collapse" id="basicExampleNav">
+
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto smooth-scroll">
+        <li class="nav-item active">
+          <a class="nav-link" href="#intro">Home
+            <!-- <span class="sr-only">(current)</span> -->
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#my-passions">Interests</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#contact">Recipe<i class="fas fa-egg"></i></a>
+          </li>
+      </ul>
+      <!-- Links -->
+
+      <!-- Social Icon  -->
+    <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com/mihajlo.supic.1" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://twitter.com/MihajloS" target="_blank"><i class="fab fa-twitter"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://www.instagram.com/mihajlosupic/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </li>
     </ul>
+
+    </div>
+
   </div>
+  <!-- Collapsible content -->
 
 </nav>
+<!--/.Navbar-->
+
+<!-- Mask -->
+<div id="intro" class="view">
+
+  <div class="mask rgba-black-strong">
+
+    <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+      <div class="row d-flex justify-content-center text-center">
+
+        <div class="col-md-10">
+
+          <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Hello Stranger</h2>
+          <hr class="hr-light">
+          <h4 class="white-text my-4">My name is Mihajlo and I make things that < live online >.
+              Second most important thing I am capable of making are perfect sunny-side up eggs <i class="fas fa-egg"></i></h4>
+          <a href="#my-passions"> <button type="button" class="btn btn-outline-white">Read about me <i class="fas fa-book ml-2"></i></button></a>
+          <a href="#contact"><button type="button" class="btn btn-outline-white">Follow the egg <i class="fas fa-book ml-2"></i></button></a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- /Mask -->

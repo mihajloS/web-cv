@@ -1,27 +1,60 @@
-<div class="row">
-  <div class="col-sm-12 pt-sm-4 pt-2">
-    <p class="h2">Lets talk things!</p>
-  </div>
-  <div class="col-sm-12" [hidden]="submit">
-    <!-- contact form -->
-    <form #contactForm="ngForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="email_address">Email address</label>
-        <input required type="email" #email="ngModel" [(ngModel)]="model.from" name="email" class="form-control" id="email_address" placeholder="Enter email">
-        <div [hidden]="email.valid || email.untouched" class="alert alert-danger">You must fill in email</div>
+  <!-- Contact -->
+<section id="contact">
+
+  <div class="container">
+
+    <!-- Heading -->
+    <h2 class="mb-lg-5 font-weight-bold text-center">Contact me</h2>
+
+    <!--Grid row-->
+    <div class="row justify-content-center" [hidden]="submit">
+
+      <!--Grid column-->
+      <div class="col-lg-10 col-md-12">
+
+        <!-- Form contact -->
+        <form class="p-0 grey-text" #contactForm="ngForm" (ngSubmit)="onSubmit()">
+
+          <!-- <div class="md-form form-sm"> <i class="fas fa-user prefix"></i>
+            <input type="text" id="form3" class="form-control form-control-sm">
+            <label for="form3">Your name</label>
+          </div> -->
+
+          <div class="md-form form-sm"> <i class="fas fa-envelope prefix"></i>
+            <input  #email="ngModel" [(ngModel)]="model.from" name="email" required type="text" id="form2" class="form-control form-control-sm">
+            <label for="form2">Your email</label>
+            <div [hidden]="email.valid || email.untouched" class="alert alert-danger">You must fill in email</div>
+          </div>
+
+          <!-- <div class="md-form form-sm"> <i class="fas fa-tag prefix"></i>
+            <input type="text" id="form32" class="form-control form-control-sm">
+            <label for="form34">Subject</label>
+          </div> -->
+
+          <div class="md-form form-sm"> <i class="fas fa-pencil-alt prefix"></i>
+            <textarea [(ngModel)]="model.message" minlength="40" #message="ngModel" name="message" required type="text" id="form8" class="md-textarea form-control form-control-sm" rows="4"></textarea>
+            <label for="form8">Your message</label>
+            <div *ngIf="message.invalid && message.touched" class="alert alert-danger">Message should be at least 40 characters long</div>
+          </div>
+          <div class="text-center mt-4">
+            <button [disabled]="!contactForm.valid" type="submit" class="btn btn-primary">Send <i class="far fa-paper-planeml-1"></i></button>
+          </div>
+        </form>
+        <!-- Form contact -->
+
       </div>
-      <div class="form-group">
-        <label for="mesage_text">Message</label>
-        <textarea [(ngModel)]="model.message" minlength="40" #message="ngModel" name="message" required class="form-control" id="mesage_text" rows="5"></textarea>
-      <div *ngIf="message.invalid && message.touched" class="alert alert-danger">Message should be at least 40 characters long</div>
+    </div>
+
+    <div class="row justify-content-center" [hidden]="!submit">
+      <div class="col-lg-10 col-sm-12" >
+        <p>You sent me message from email: <b>{{model.from}}</b></p>
+        <p>With content: <b>{{model.message}}</b></p>
+        <p> If you want to edit you can go <a (click)="submit = !submit" href="">back</a> and update.</p>
       </div>
-      <button [disabled]="!contactForm.valid" type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
+
   </div>
-   <!-- After submit message -->
-  <div class="col-sm-12" [hidden]="!submit">
-    <p>You sent me message from email: <b>{{model.from}}</b></p>
-    <p>With content: <b>{{model.message}}</b></p>
-    If you want to edit you can go <a (click)="submit = !submit" href="">back</a> and update.
-  </div>
-</div>
+</section>
+<!-- /Contact -->
+
+<hr class="my-5">
