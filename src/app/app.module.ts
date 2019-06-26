@@ -12,6 +12,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { PublicChatComponent } from './public-chat/public-chat.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { RoutingRulesService } from './public-chat/routing-rules.service';
+import { ProjectsComponent } from './projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RoutingRulesService } from './public-chat/routing-rules.service';
     NavigationComponent,
     AboutComponent,
     ContactComponent,
-    PublicChatComponent
+    PublicChatComponent,
+    ProjectsComponent
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
